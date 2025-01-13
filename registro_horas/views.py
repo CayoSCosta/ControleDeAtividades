@@ -1,6 +1,8 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils.timezone import now, datetime
+from django.utils.timezone import datetime
+from openpyxl import Workbook
+from django.http import HttpResponse
 from .models import Registro
 from .forms import RegistroForm
 
@@ -69,4 +71,70 @@ def visualizar_tarefa_view(request, pk):
     registro = get_object_or_404(Registro, pk=pk)
     print(f"Horas utilizadas: {registro.horas_utilizadas}")
     return render(request, 'visualizar.html', {'registro': registro})
+
+
+def export_xls(request):
+    # Cria o arquivo Excel
+    wb = Workbook()
+    ws = wb.active
+    ws.title = 'Tickets'
+
+    # Escreve o cabeçalho
+    ws.append(['Ticket', 'Cliente', 'Descrição', 'Data de Início', 'Hora de Início', 'Horas Utilizadas', 'Status'])
+
+    # Escreve os dados dos tickets
+    tickets = Registro.objects.all()
+    for ticket in tickets:
+        horas_utilizadas = ticket.horas_utilizadas if ticket.horas_utilizadas else 0  # Caso não tenha horas, coloca 0
+
+        ws.append([
+            ticket.ticket,
+            ticket.cliente,
+            ticket.descricao,
+            ticket.data_de_inicio,
+            ticket.hora_de_inicio,
+            horas_utilizadas,  # Hora utilizada
+            'Em Andamento' if not ticket.hora_de_termino else 'Encerrado',
+        ])
+
+    # Cria a resposta HTTP com o tipo MIME para Excel
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="tickets.xlsx"'
+
+    # Salva o arquivo Excel na resposta
+    wb.save(response)
+
+    return response
+def export_xls(request):
+    # Cria o arquivo Excel
+    wb = Workbook()
+    ws = wb.active
+    ws.title = 'Tickets'
+
+    # Escreve o cabeçalho
+    ws.append(['Ticket', 'Cliente', 'Descrição', 'Data de Início', 'Hora de Início', 'Horas Utilizadas', 'Status'])
+
+    # Escreve os dados dos tickets
+    tickets = Registro.objects.all()
+    for ticket in tickets:
+        horas_utilizadas = ticket.horas_utilizadas if ticket.horas_utilizadas else 0  # Caso não tenha horas, coloca 0
+
+        ws.append([
+            ticket.ticket,
+            ticket.cliente,
+            ticket.descricao,
+            ticket.data_de_inicio,
+            ticket.hora_de_inicio,
+            horas_utilizadas,  # Hora utilizada
+            'Em Andamento' if not ticket.hora_de_termino else 'Encerrado',
+        ])
+
+    # Cria a resposta HTTP com o tipo MIME para Excel
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="Atividades.xlsx"'
+
+    # Salva o arquivo Excel na resposta
+    wb.save(response)
+
+    return response
 
