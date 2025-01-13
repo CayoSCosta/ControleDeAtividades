@@ -36,13 +36,21 @@ class Registro(BaseModel):
             raise ValidationError("A hora de término não pode ser anterior à hora de início.")
         super().clean()
 
+    # def save(self, *args, **kwargs):
+    #     # Calcula automaticamente as horas utilizadas
+    #     if self.hora_de_termino:
+    #         inicio = datetime.combine(self.data_de_inicio, self.hora_de_inicio)
+    #         termino = datetime.combine(self.data_de_inicio, self.hora_de_termino)
+    #         self.horas_utilizadas = (termino - inicio).total_seconds() / 3600  # Converte segundos em horas
+    #     super().save(*args, **kwargs)
+
     def save(self, *args, **kwargs):
         # Calcula automaticamente as horas utilizadas
-        if self.hora_de_termino:
+        if self.hora_de_inicio and self.hora_de_termino:
             inicio = datetime.combine(self.data_de_inicio, self.hora_de_inicio)
             termino = datetime.combine(self.data_de_inicio, self.hora_de_termino)
             self.horas_utilizadas = (termino - inicio).total_seconds() / 3600  # Converte segundos em horas
         super().save(*args, **kwargs)
-
+    
     class Meta:
         ordering = ['-data_de_inicio', '-hora_de_inicio']  # Ordena por data e hora de início, mais recentes primeiro

@@ -23,7 +23,7 @@
             <p><strong>Hora de Início:</strong> {{ registro.hora_de_inicio|time:"H:i" }}</p>
         </div>
         
-        <form method="post">
+        <form method="post" action="{% url 'encerrar' pk=registro.id %}">
             {% csrf_token %}
             <div class="mb-3">
                 <label for="descricao" class="form-label">Descrição do que foi feito</label>
@@ -38,6 +38,12 @@
                 </a>
             </div>
         </form>
+
+        {% if erro %}
+    <div class="alert alert-danger" role="alert">
+        {{ erro }}
+    </div>
+{% endif %}
     </div>
 </body>
 </html>

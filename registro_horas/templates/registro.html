@@ -22,9 +22,6 @@
             {{ form.as_p }}
             <div class="text-center mt-3">
                 <button type="submit" name="acao" value="salvar" class="btn btn-success">Salvar</button>
-                {% if data_de_inicio and hora_de_inicio %}
-                    <button type="submit" name="acao" value="encerrar" class="btn btn-danger">Encerrar</button>
-                {% endif %}
             </div>
             <div class="text-center mt-3">
                 <a href="{% url 'index' %}" class="btn btn-secondary">

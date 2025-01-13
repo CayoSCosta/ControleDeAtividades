@@ -21,19 +21,21 @@
                     <th>Cliente</th>
                     <th>Descrição</th>
                     <th>Data de Início</th>
-                    <th>Hora de Início</th>
+                    {% comment %} <th>Hora de Início</th> {% endcomment %}
+                    {% comment %} FALTA POR TITULO {% endcomment %}
+                    <th>Status</th>
                     <th>Status</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-                {% for ticket in ultimos_tickets %}
+                {% for ticket in page_obj %}
                     <tr>
                         <td>{{ ticket.ticket }}</td>
                         <td>{{ ticket.cliente }}</td>
                         <td>{{ ticket.descricao }}</td>
                         <td>{{ ticket.data_de_inicio|date:"d/m/Y" }}</td>
-                        <td>{{ ticket.hora_de_inicio|time:"H:i" }}</td>
+                        {% comment %} <td>{{ ticket.hora_de_inicio|time:"H:i" }}</td> {% endcomment %}
                         <td>
                             {% if not ticket.hora_de_termino %}
                                 <span class="text-warning">Em Andamento</span>
@@ -61,7 +63,42 @@
                 {% endfor %}
             </tbody>
         </table>
-        
+
+        <!-- Controles de Paginação -->
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="Primeira">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Próxima">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+
     </div>
 </body>
 </html>
