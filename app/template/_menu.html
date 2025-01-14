@@ -1,0 +1,66 @@
+{% load static %}
+
+    <!-- Navheader -->
+    <nav id="navheader" class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="toggle-sidebar text-end">
+                <i class="fas fa-bars"></i>
+            </div>
+            <a class="navbar-brand" href="#">Controle de Horas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Dropdown para Usuário Logado -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if user.is_authenticated %}
+                                Olá {{user.username}}
+                            {% else %}
+                                Olá visitante!
+                            {% endif %}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#">Perfil</a></li>
+                            <li><a class="dropdown-item" href="#">Configurações</a></li>
+                            <li><a class="dropdown-item" href="#">Sobre</a></li>
+                            {% if user.is_authenticated %}
+                                <hr />
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Side Menu logged user -->
+    {% if user.is_authenticated %}
+        <div id="sidebar" class="d-flex flex-column">
+            <a href="{% url 'cars_list' %}" class="nav-link">
+                <i class="fas fa-home"></i> <span>Carros</span>
+            </a>
+            <a href="{% url 'new_car' %}" class="nav-link">
+                <i class="fas fa-info-circle"></i> <span>Novo Carro</span>
+            </a>
+            {% comment %} <a href="{% url 'register' %}" class="nav-link">
+                <i class="fas fa-cogs"></i> <span>Services</span>
+            </a>
+            <a href="{% url 'register' %}" class="nav-link">
+                <i class="fas fa-envelope"></i> <span>Contact</span>
+            </a> {% endcomment %}
+        </div>
+    {% else %}
+        <div id="sidebar" class="d-flex flex-column">   
+            <a href="#" class="nav-link">
+                <i class="fas fa-home"></i> <span>Registrar</span>
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-info-circle"></i> <span>Login</span>
+            </a>
+        </div>
+    {% endif %}

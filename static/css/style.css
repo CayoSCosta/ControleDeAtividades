@@ -1,0 +1,82 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+
+#navheader {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+}
+
+#sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    position: fixed;
+    top: 56px; /* altura do navheader */
+    bottom: 0;
+    overflow-y: auto;
+    transition: width 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha os itens à esquerda */
+}
+
+#sidebar.collapsed {
+    width: 80px;
+}
+
+#sidebar .nav-link {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    width: 100%; /* Garante que o link ocupe toda a largura do sidebar */
+    padding: 10px;
+    text-decoration: none; /* Remove o sublinhado dos links */
+    color: #333; /* Cor do texto dos links */
+    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+}
+
+#sidebar .nav-link:hover {
+    background-color: #e2e6ea; /* Cor de fundo cinza mais escuro ao passar o mouse */
+}
+
+#sidebar .nav-link.active {
+    background-color: #d6d9db; /* Cor de fundo cinza escuro quando o item está ativo */
+    color: #000; /* Cor do texto quando o item está ativo */
+}
+
+#sidebar.collapsed .nav-link {
+    justify-content: center; /* Centraliza o conteúdo quando o sidebar está colapsado */
+    font-size: 24px;
+}
+
+#sidebar.collapsed .nav-link span {
+    display: none;
+}
+
+#sidebar .nav-link i {
+    margin-right: 10px; /* Espaço entre o ícone e o texto */
+}
+
+#content {
+    margin-left: 250px;
+    padding: 20px;
+    margin-top: 56px; /* altura do navheader */
+    overflow-y: auto;
+    flex: 1;
+    transition: margin-left 0.3s;
+}
+
+#content.collapsed {
+    margin-left: 80px;
+}
+
+.toggle-sidebar {
+    cursor: pointer;
+    padding: 10px;
+}

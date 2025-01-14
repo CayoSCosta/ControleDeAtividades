@@ -21,6 +21,7 @@ class Registro(BaseModel):
     horas_utilizadas = models.FloatField(null=True, blank=True)  # Altera para Float para armazenar horas como número
     ticket = models.CharField(max_length=255, null=True, blank=True)
     cliente = models.CharField(max_length=255, null=True, blank=True)
+    titulo = models.CharField(max_length=255, null=True, blank=True)
     descricao = models.TextField(null=True, blank=True)
 
     def __str__(self):
