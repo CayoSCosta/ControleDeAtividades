@@ -34,19 +34,12 @@
                     <div class="alert alert-warning text-center">
                         <strong>Status:</strong> Em Andamento
                     </div>
-                    <form method="post" action="{% url 'encerrar' registro.id %}">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="descricao" class="form-label">Descrição do que foi feito:</label>
-                            <textarea 
-                                id="descricao" 
-                                name="descricao" 
-                                class="form-control" 
-                                rows="3" 
-                                placeholder="Descreva as atividades realizadas"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-danger">Encerrar Atividade</button>
-                    </form>
+                        <a href="{% url 'encerrar' registro.id %}" class="btn btn-danger" title="Encerrar">
+                            Encerrar Atividade
+                        </a>
+                        <a href="{% url 'pausar' registro.id %}" class="btn btn-secondary" title="Parar">
+                            Parar Atividade
+                        </a>
                 {% endif %}
             </div>
         </div>

@@ -29,7 +29,7 @@
                             <li><a class="dropdown-item" href="#">Sobre</a></li>
                             {% if user.is_authenticated %}
                                 <hr />
-                                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
                             {% endif %}
                         </ul>
                     </li>
@@ -41,16 +41,16 @@
     <!-- Side Menu logged user -->
     {% if user.is_authenticated %}
         <div id="sidebar" class="d-flex flex-column">
-            <a href="{% url 'cars_list' %}" class="nav-link">
-                <i class="fas fa-home"></i> <span>Carros</span>
+            <a href="#" class="nav-link">
+                <i class="fas fa-home"></i> <span>Home</span>
             </a>
-            <a href="{% url 'new_car' %}" class="nav-link">
-                <i class="fas fa-info-circle"></i> <span>Novo Carro</span>
+            <a href="{url ''}" class="nav-link">
+                <i class="fas fa-info-circle"></i> <span>Novo Registro</span>
             </a>
-            {% comment %} <a href="{% url 'register' %}" class="nav-link">
+            {% comment %} <a href="#" class="nav-link">
                 <i class="fas fa-cogs"></i> <span>Services</span>
             </a>
-            <a href="{% url 'register' %}" class="nav-link">
+            <a href="#" class="nav-link">
                 <i class="fas fa-envelope"></i> <span>Contact</span>
             </a> {% endcomment %}
         </div>

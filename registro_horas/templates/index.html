@@ -1,88 +1,88 @@
 {% extends "_base.html" %}
 {% block content %}
 
-        <h1 class="text-center">Resumo de Tickets</h1>
-        <div class="text-end mb-3">
-            <a href="{% url 'registrar' %}" class="btn btn-primary">Nova Atividade</a>
-        </div>
+    <h1 class="text-center">Resumo de Tickets</h1>
+    <div class="text-end mb-3">
+        <a href="{% url 'registrar' %}" class="btn btn-primary">Nova Atividade</a>
+    </div>
 
-        <table class="table table-bordered table-striped">
-            <thead class="table-dark">
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Ticket</th>
+                <th>Cliente</th>
+                <th>Título</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in page_obj %}
                 <tr>
-                    <th>Ticket</th>
-                    <th>Cliente</th>
-                    <th>Titulo</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ticket in page_obj %}
-                    <tr>
-                        <td>{{ ticket.ticket }}</td>
-                        <td>{{ ticket.cliente }}</td>
-                        <td>{{ ticket.titulo }}</td>
-                        <td>
+                    <td>{{ ticket.ticket }}</td>
+                    <td>{{ ticket.cliente }}</td>
+                    <td>{{ ticket.titulo }}</td>
+                    <td>
+                        {% if not ticket.hora_de_termino %}
+                            <span class="text-warning">Em Andamento</span>
+                        {% else %}
+                            <span class="text-success">Encerrado</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'visualizar' ticket.id %}" class="btn btn-primary btn-sm" title="Visualizar">
+                                <i class="fas fa-eye"></i>
+                            </a>
                             {% if not ticket.hora_de_termino %}
-                                <span class="text-warning">Em Andamento</span>
-                            {% else %}
-                                <span class="text-success">Encerrado</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <div class="d-flex gap-2">
-                                {% if not ticket.hora_de_termino %}
                                 <a href="{% url 'encerrar' ticket.id %}" class="btn btn-danger btn-sm" title="Encerrar">
                                     <i class="fas fa-times-circle"></i>
                                 </a>
-                                {% endif %}
-                                <a href="{% url 'visualizar' ticket.id %}" class="btn btn-primary btn-sm" title="Visualizar">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="7" class="text-center">Nenhum ticket registrado.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">Nenhum ticket registrado.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-        <!-- Controles de Paginação -->
-        <nav>
-            <ul class="pagination justify-content-center">
-                {% if page_obj.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page=1" aria-label="Primeira">
-                            <span aria-hidden="true">&laquo;&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                {% endif %}
-
-                <li class="page-item disabled">
-                    <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+    <!-- Controles de Paginação -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="Primeira">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
                 </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
 
-                {% if page_obj.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Próxima">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
-                            <span aria-hidden="true">&raquo;&raquo;</span>
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
-        </nav>
+            <li class="page-item disabled">
+                <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            </li>
 
-        {% endblock %}
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Próxima">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+{% endblock %}
