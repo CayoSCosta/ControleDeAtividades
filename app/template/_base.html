@@ -14,14 +14,47 @@
 
 <body>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleButton = document.getElementById("theme-toggle");
+            const themeIcon = document.getElementById("theme-icon");
+            const body = document.body;
+            const navbar = document.getElementById("navheader");
+            const footer = document.getElementById("footer");
+
+            // Verifica se o usuário já escolheu um tema antes
+            if (localStorage.getItem("theme") === "dark") {
+                body.classList.add("dark-mode");
+                navbar.classList.add("dark-mode");
+                footer.classList.add("dark-mode");
+                themeIcon.classList.remove("fa-moon");
+                themeIcon.classList.add("fa-sun");
+            }
+
+            toggleButton.addEventListener("click", function () {
+                const isDarkMode = body.classList.toggle("dark-mode");
+                navbar.classList.toggle("dark-mode", isDarkMode);
+
+                // Salva a preferência no localStorage
+                localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+
+                // Alterna o ícone de lua para sol e vice-versa
+                themeIcon.classList.toggle("fa-moon", !isDarkMode);
+                themeIcon.classList.toggle("fa-sun", isDarkMode);
+            });
+        });
+
+    </script>
+
     {% include '_menu.html' %}
-    
+
     <div id="content">
         {% block content %}{% endblock %}
     </div>
 
     {% include '_footer.html' %}
     {% include "_scripts.html" %}
+
 </body>
 
 </html>

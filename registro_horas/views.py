@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.utils.timezone import datetime
@@ -40,24 +41,36 @@ class CriarTarefaView(CreateView):
 
         return super().form_valid(form)
 
-class PararTarefaView(UpdateView):
-    model = Registro
-    template_name = 'pausar.html'
-    fields = []
-
+class PararTarefaView(View):
     def post(self, request, *args, **kwargs):
-        registro = self.get_object()
+        registro = get_object_or_404(Registro, pk=kwargs['pk'])
 
         if not registro.hora_de_pausa:
             registro.hora_de_pausa = datetime.now().time()
+            status = "pausado"
         else:
             pausa_inicial = datetime.combine(datetime.today(), registro.hora_de_pausa)
             pausa_final = datetime.now()
             registro.tempo_pausado += (pausa_final - pausa_inicial)
             registro.hora_de_pausa = None
+            status = "ativo"
 
         registro.save()
-        return redirect('index')
+        return JsonResponse({"status": status})
+    
+class ReiniciarTarefaView(View):
+    def post(self, request, *args, **kwargs):
+        registro = get_object_or_404(Registro, pk=kwargs['pk'])
+
+        if registro.hora_de_pausa:
+            pausa_inicial = datetime.combine(datetime.today(), registro.hora_de_pausa)
+            pausa_final = datetime.now()
+            registro.tempo_pausado += (pausa_final - pausa_inicial)
+            registro.hora_de_pausa = None
+            registro.save()
+            return JsonResponse({"status": "ativo"})
+
+        return JsonResponse({"status": "ativo"})
 
 class EncerrarTarefaView(UpdateView):
     model = Registro

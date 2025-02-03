@@ -1,3 +1,152 @@
+/* ========================== */
+/*          TEMA CLARO        */
+/* ========================== */
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+/* Navbar no tema claro */
+#navheader {
+    background-color: #f8f9fa !important;
+    color: #000000;
+}
+
+#navheader .navbar-light .navbar-nav .nav-link {
+    color: #000000;
+}
+
+#navheader .navbar-light .navbar-nav .nav-link:hover {
+    color: #0056b3;
+}
+
+/* Sidebar no tema claro */
+#sidebar {
+    background-color: #f8f9fa;
+    color: #000000;
+}
+
+#sidebar .nav-link {
+    color: #000000;
+}
+
+#sidebar .nav-link:hover {
+    background-color: #e2e6ea;
+}
+
+#sidebar .nav-link.active {
+    background-color: #d6d9db;
+    color: #000000;
+}
+
+/* Dropdown no tema claro */
+.navbar-light .dropdown-menu {
+    background-color: #ffffff;
+    border-color: #ddd;
+}
+
+.navbar-light .dropdown-menu .dropdown-item {
+    color: #000000;
+}
+
+.navbar-light .dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* ========================== */
+/*          TEMA ESCURO       */
+/* ========================== */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Navbar no tema escuro */
+body.dark-mode #navheader {
+    background-color: #1e1e1e !important;
+    color: #ffffff;
+    border-bottom: 1px solid #444;
+}
+
+body.dark-mode #navheader .navbar-light .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+body.dark-mode #navheader .navbar-light .navbar-nav .nav-link:hover {
+    color: #bb86fc;
+}
+
+/* Ícone do menu (três barras) no tema escuro */
+body.dark-mode #navheader .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* Sidebar no tema escuro */
+body.dark-mode #sidebar {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.dark-mode #sidebar .nav-link {
+    color: #ffffff;
+}
+
+body.dark-mode #sidebar .nav-link:hover {
+    background-color: #333333;
+}
+
+body.dark-mode #sidebar .nav-link.active {
+    background-color: #444;
+    color: #ffffff;
+}
+
+/* Ajustes gerais no tema escuro */
+body.dark-mode .toggle-sidebar i {
+    color: #ffffff;
+}
+
+/* Alterando o ícone do botão de tema */
+body.dark-mode #theme-icon {
+    color: #ffffff;
+}
+
+body.dark-mode #theme-toggle {
+    background-color: #333333;
+    border: none;
+    color: #ffffff;
+}
+
+body.dark-mode #theme-toggle:hover {
+    background-color: #444444;
+}
+
+/* Dropdown no tema escuro */
+body.dark-mode .dropdown-menu {
+    background-color: #1e1e1e;
+    border-color: #444;
+}
+
+body.dark-mode .dropdown-menu .dropdown-item {
+    color: #ffffff;
+}
+
+body.dark-mode .dropdown-menu .dropdown-item:hover {
+    background-color: #333333;
+}
+
+/* ========================== */
+/*        AJUSTES GERAIS      */
+/* ========================== */
 body {
     display: flex;
     flex-direction: column;
@@ -12,9 +161,9 @@ body {
     z-index: 1030;
 }
 
+/* Sidebar */
 #sidebar {
     width: 250px;
-    background-color: #f8f9fa;
     padding: 10px;
     position: fixed;
     top: 56px; /* altura do navheader */
@@ -23,7 +172,7 @@ body {
     transition: width 0.3s;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Alinha os itens à esquerda */
+    align-items: flex-start;
 }
 
 #sidebar.collapsed {
@@ -34,24 +183,23 @@ body {
     font-size: 18px;
     display: flex;
     align-items: center;
-    width: 100%; /* Garante que o link ocupe toda a largura do sidebar */
+    width: 100%;
     padding: 10px;
-    text-decoration: none; /* Remove o sublinhado dos links */
-    color: #333; /* Cor do texto dos links */
-    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+    text-decoration: none;
+    transition: background-color 0.3s;
 }
 
 #sidebar .nav-link:hover {
-    background-color: #e2e6ea; /* Cor de fundo cinza mais escuro ao passar o mouse */
+    background-color: #e2e6ea;
 }
 
 #sidebar .nav-link.active {
-    background-color: #d6d9db; /* Cor de fundo cinza escuro quando o item está ativo */
-    color: #000; /* Cor do texto quando o item está ativo */
+    background-color: #d6d9db;
+    color: #000;
 }
 
 #sidebar.collapsed .nav-link {
-    justify-content: center; /* Centraliza o conteúdo quando o sidebar está colapsado */
+    justify-content: center;
     font-size: 24px;
 }
 
@@ -60,13 +208,13 @@ body {
 }
 
 #sidebar .nav-link i {
-    margin-right: 10px; /* Espaço entre o ícone e o texto */
+    margin-right: 10px;
 }
 
 #content {
     margin-left: 250px;
     padding: 20px;
-    margin-top: 56px; /* altura do navheader */
+    margin-top: 56px;
     overflow-y: auto;
     flex: 1;
     transition: margin-left 0.3s;
@@ -79,4 +227,21 @@ body {
 .toggle-sidebar {
     cursor: pointer;
     padding: 10px;
+}
+
+/* Footer */
+footer {
+    background-color: #f8f9fa;
+    color: #000000;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Footer no tema escuro */
+body.dark-mode footer {
+    background-color: #333;
+    color: #ffffff;
 }

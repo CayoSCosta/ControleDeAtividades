@@ -34,6 +34,9 @@
                             <a href="{% url 'visualizar' ticket.id %}" class="btn btn-primary btn-sm" title="Visualizar">
                                 <i class="fas fa-eye"></i>
                             </a>
+                            <a href="{% url 'visualizar' ticket.id %}" class="btn btn-warning btn-sm" title="Visualizar">
+                                <i class="fas fa-pause"></i>
+                            </a>
                             {% if not ticket.hora_de_termino %}
                                 <a href="{% url 'encerrar' ticket.id %}" class="btn btn-danger btn-sm" title="Encerrar">
                                     <i class="fas fa-times-circle"></i>

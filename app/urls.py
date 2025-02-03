@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from registro_horas.views import IndexView, CriarTarefaView, EncerrarTarefaView, VisualizarTarefaView, ExportXLSView, PararTarefaView
+from registro_horas.views import IndexView, CriarTarefaView, EncerrarTarefaView, VisualizarTarefaView, ExportXLSView, PararTarefaView, ReiniciarTarefaView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('visualizar/<uuid:pk>/', VisualizarTarefaView.as_view(), name='visualizar'),
     path('export_xls/', ExportXLSView.as_view(), name='export_xls'),
     path('pausar/<uuid:pk>/', PararTarefaView.as_view(), name='pausar'),
+    path('reiniciar/<uuid:pk>/', ReiniciarTarefaView.as_view(), name='reiniciar'),
 ]

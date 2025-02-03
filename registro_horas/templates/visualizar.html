@@ -26,20 +26,16 @@
                 <p><strong>Data de Início:</strong> {{ registro.data_de_inicio|date:"d/m/Y" }}</p>
                 <p><strong>Hora de Início:</strong> {{ registro.hora_de_inicio|time:"H:i" }}</p>
                 {% if registro.hora_de_termino %}
-                    <p><strong>Data de Término:</strong> {{ registro.data_de_inicio|date:"d/m/Y" }}</p>
+                    <p><strong>Data de Término:</strong> {{ registro.data_de_termino|date:"d/m/Y" }}</p>
                     <p><strong>Hora de Término:</strong> {{ registro.hora_de_termino|time:"H:i" }}</p>
                     <p><strong>Horas Utilizadas:</strong> {{ registro.horas_utilizadas|floatformat }} horas </p>
                     <p><strong>Descrição Final:</strong> {{ registro.descricao }}</p>
                 {% else %}
-                    <div class="alert alert-warning text-center">
+                    <div id="statusid" class="alert alert-warning text-center">
                         <strong>Status:</strong> Em Andamento
                     </div>
-                        <a href="{% url 'encerrar' registro.id %}" class="btn btn-danger" title="Encerrar">
-                            Encerrar Atividade
-                        </a>
-                        <a href="{% url 'pausar' registro.id %}" class="btn btn-secondary" title="Parar">
-                            Parar Atividade
-                        </a>
+                        <a href="{% url 'encerrar' registro.id %}" class="btn btn-danger" title="Encerrar">Encerrar Atividade</a>
+                        <button id="pausar-btn" data-id="{{ registro.id }}" class="btn btn-warning">Pausar</button>
                 {% endif %}
             </div>
         </div>
@@ -49,3 +45,41 @@
     </div>
 </body>
 </html>
+
+<script>
+    document.getElementById("pausar-btn").addEventListener("click", function() {
+        let button = this;
+        let registroId = button.getAttribute("data-id");
+        let status = document.getElementById("statusid");
+
+        // Enviar requisição para pausar a tarefa
+        fetch(`/pausar/${registroId}/`, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",  // CSRF Token necessário para segurança
+                "Content-Type": "application/json"
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "pausado") {
+                button.textContent = "Reiniciar Tarefa"; // Mudança de texto do botão
+                button.classList.remove("btn-warning");
+                button.classList.add("btn-success"); // Mudança da cor do botão
+
+                status.textContent = "Status: Pausado"; // Atualização do status
+                status.classList.remove("alert-warning");
+                status.classList.add("alert-info"); // Mudança da cor do status
+            } else {
+                button.textContent = "Pausar";
+                button.classList.remove("btn-success");
+                button.classList.add("btn-warning");
+
+                status.textContent = "Status: Em Andamento";
+                status.classList.remove("alert-info");
+                status.classList.add("alert-warning");
+            }
+        })
+        .catch(error => console.error("Erro:", error));
+    });
+</script>
